@@ -89,9 +89,36 @@
 
   #resetBtn { background: none; border: 1px solid #ccc; padding: 0.5rem 1.5rem; font-size: 0.9rem; border-radius: 6px; cursor: pointer; color: #555; margin-top: 0.5rem; }
   #resetBtn:hover { border-color: #999; color: #333; }
+
+  #disclaimerModal { position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.55); display: flex; align-items: center; justify-content: center; padding: 1rem; }
+  .modal-box { background: #fff; max-width: 560px; width: 100%; border-radius: 12px; padding: 2rem 2.25rem; box-shadow: 0 8px 30px rgba(0,0,0,0.25); }
+  .modal-box h2 { font-size: 1.35rem; margin-bottom: 0.75rem; }
+  .modal-box > p { font-size: 0.95rem; color: #444; line-height: 1.65; margin-bottom: 1.25rem; }
+  .modal-box h3 { font-size: 0.95rem; color: #555; margin-bottom: 0.6rem; }
+  .modal-box .check-group { margin-bottom: 1.5rem; }
+  .modal-box .check-group label { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.9rem; color: #333; line-height: 1.5; padding: 0.5rem 0; cursor: pointer; }
+  .modal-box .check-group label input[type="checkbox"] { margin-top: 0.25rem; flex-shrink: 0; width: 16px; height: 16px; accent-color: #2a8a4a; }
+  #proceedBtn { display: block; width: 100%; background: #1a1a1a; color: #fff; border: none; padding: 0.75rem; font-size: 1rem; border-radius: 8px; cursor: pointer; opacity: 0.35; pointer-events: none; transition: opacity 0.2s, background 0.2s; }
+  #proceedBtn.active { opacity: 1; pointer-events: auto; background: #2a8a4a; }
+  #proceedBtn.active:hover { background: #237a40; }
 </style>
 </head>
 <body>
+
+<div id="disclaimerModal">
+  <div class="modal-box">
+    <h2>A word on this assessment</h2>
+    <p>This is a first version of a diagnostic tool grounded in peer-reviewed research from implementation science, organisational theory, and socio-technical systems. While it is not a substitute for working with an experienced advisor, the underlying model is designed to surface structural patterns that commonly undermine strategy implementation in firms that serve clients with teams.</p>
+    <h3>I&rsquo;m aware that&hellip;</h3>
+    <div class="check-group">
+      <label><input type="checkbox" class="disclaimer-check"> This is a v1 of the assessment</label>
+      <label><input type="checkbox" class="disclaimer-check"> This assessment is aimed at consultants, coaches, and agencies that operate in B2B markets</label>
+      <label><input type="checkbox" class="disclaimer-check"> A self-serving assessment can be directionally useful, but lacks the contextual richness of working with a real person</label>
+    </div>
+    <button type="button" id="proceedBtn">Proceed</button>
+  </div>
+</div>
+
 <div class="container">
 
 <h1>Fix the implementation-gap in your advisory work</h1>
@@ -104,7 +131,7 @@
 <!-- Dimension 1: Truth -->
 <div class="dimension dim-truth">
   <h2>Dimension 1: Truth</h2>
-  <p class="dim-desc"> Can people in the client organisation say what they actually think? /br , it's the unsaid facts that hinder implementation. Implementation is always challenging, but impossible if there's no way to communicate what is going on and what could need adjustment.</p>
+  <p class="dim-desc"> Can people in the client organisation say what they actually think? <br>Often, it's the unsaid facts that hinder implementation. Implementation is always challenging, but impossible if there's no way to communicate what is going on and what could need adjustment.</p>
 
   <div class="question">
     <p><strong>1.</strong> Do client team members publicly agree with your recommendations, only to express doubts or confusion privately afterwards?</p>
@@ -152,7 +179,7 @@
 <!-- Dimension 3: Velocity -->
 <div class="dimension dim-velocity">
   <h2>Dimension 3: Velocity</h2>
-  <p class="dim-desc">Can the organisational structure support the pace and coordination the strategy demands? Not</p>
+  <p class="dim-desc">Can the organisational structure support the pace and coordination the strategy demands? <br> Organizations have a different capacity to change. In many cases, the change that is being proposed is beyond what the client organization could be expected to absorb,</p>
 
   <div class="question">
     <p><strong>7.</strong> Does the recommended strategy require collaboration across departments that currently operate on separate reporting lines, budgets, or physical locations?</p>
@@ -316,6 +343,21 @@ document.getElementById("resetBtn").addEventListener("click", () => {
   document.getElementById("results").style.display = "none";
   scoreBtn.classList.remove("active");
   window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+// Disclaimer modal
+const disclaimerChecks = document.querySelectorAll(".disclaimer-check");
+const proceedBtn = document.getElementById("proceedBtn");
+
+disclaimerChecks.forEach(cb => {
+  cb.addEventListener("change", () => {
+    const allChecked = Array.from(disclaimerChecks).every(c => c.checked);
+    proceedBtn.classList.toggle("active", allChecked);
+  });
+});
+
+proceedBtn.addEventListener("click", () => {
+  document.getElementById("disclaimerModal").style.display = "none";
 });
 </script>
 </body>
