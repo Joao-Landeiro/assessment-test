@@ -77,6 +77,10 @@
   .intervention .rec-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 0.15rem; }
   .intervention h4 { font-size: 0.95rem; margin-bottom: 0.2rem; }
   .intervention .academic-name { font-size: 0.82rem; color: #888; margin-bottom: 0.6rem; }
+  .intervention .mechanism { background: rgba(0,0,0,0.04); border-left: 3px solid rgba(0,0,0,0.15); border-radius: 0 6px 6px 0; padding: 0.75rem 1rem; margin-bottom: 0.75rem; }
+  .intervention .mechanism-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 0.1rem; display: block; }
+  .intervention .mechanism-name { font-size: 0.95rem; font-weight: 700; color: #333; display: block; margin-bottom: 0.3rem; }
+  .intervention .mechanism p { font-size: 0.88rem; color: #555; line-height: 1.55; margin: 0; }
   .intervention .track { background: rgba(0,0,0,0.03); border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 0.5rem; font-size: 0.88rem; }
   .intervention .track strong { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.25rem; }
   .track.correct strong { color: #b03030; }
@@ -90,8 +94,8 @@
 <body>
 <div class="container">
 
-<h1>Implementation Diagnostic Assessment</h1>
-<p class="subtitle">12 questions across 4 dimensions. Think about patterns across your engagements, not a single client.</p>
+<h1>Fix the implementation-gap in your advisory work</h1>
+<p class="subtitle">Advisors, consultants, and coaches often struggle to get their recommendations adopted. This diagnostic helps you identify structural patterns behind difficult implementations. It based on sound scientific research and leans on widely cited authors and academics.</p>
 
 <p class="intro">This diagnostic helps you identify structural patterns behind difficult implementations. Answer each question thinking about your typical engagements &mdash; not one specific client. The tool will score your responses across four dimensions and recommend evidence-based interventions matched to your situation.</p>
 
@@ -100,7 +104,7 @@
 <!-- Dimension 1: Truth -->
 <div class="dimension dim-truth">
   <h2>Dimension 1: Truth</h2>
-  <p class="dim-desc">Can people in the client organisation say what they actually think?</p>
+  <p class="dim-desc"> Can people in the client organisation say what they actually think? /br , it's the unsaid facts that hinder implementation. Implementation is always challenging, but impossible if there's no way to communicate what is going on and what could need adjustment.</p>
 
   <div class="question">
     <p><strong>1.</strong> Do client team members publicly agree with your recommendations, only to express doubts or confusion privately afterwards?</p>
@@ -124,7 +128,7 @@
 <!-- Dimension 2: Coherence -->
 <div class="dimension dim-coherence">
   <h2>Dimension 2: Coherence</h2>
-  <p class="dim-desc">Do different groups share the same understanding of what the strategy means?</p>
+  <p class="dim-desc">Do different groups share the same understanding of what the strategy means? <br> It takes time for changes to take hold, and in this period, the client organization will need to stay aligned. This alignment is often elusive and fleeting, requiring frequent reinforcement.</p>
 
   <div class="question">
     <p><strong>4.</strong> When working with clients, do you find that different departments (e.g., Sales vs. Product) interpret your core strategy recommendations in noticeably different ways?</p>
@@ -148,7 +152,7 @@
 <!-- Dimension 3: Velocity -->
 <div class="dimension dim-velocity">
   <h2>Dimension 3: Velocity</h2>
-  <p class="dim-desc">Can the organisational structure support the pace and coordination the strategy demands?</p>
+  <p class="dim-desc">Can the organisational structure support the pace and coordination the strategy demands? Not</p>
 
   <div class="question">
     <p><strong>7.</strong> Does the recommended strategy require collaboration across departments that currently operate on separate reporting lines, budgets, or physical locations?</p>
@@ -282,7 +286,11 @@ scoreBtn.addEventListener("click", () => {
       } else {
         tracksHTML = `<div class="track correct"><strong>How to correct</strong>${iv.correctHow}</div><div class="track prevent"><strong>How to prevent</strong>${iv.preventHow}</div>`;
       }
-      interventionsHTML += `<div class="intervention"><p class="rec-label">Recommended move:</p><h4>${iv.practicalName}</h4><p class="academic-name">${iv.name} by ${iv.source}</p>${tracksHTML}</div>`;
+      let mechanismHTML = "";
+      if (iv.mechanismName) {
+        mechanismHTML = `<div class="mechanism"><span class="mechanism-label">What\u2019s happening</span><span class="mechanism-name">${iv.mechanismName}</span><p>${iv.mechanismDesc}</p></div>`;
+      }
+      interventionsHTML += `<div class="intervention"><p class="rec-label">Recommended move:</p><h4>${iv.practicalName}</h4><p class="academic-name">${iv.name} by ${iv.source}</p>${mechanismHTML}${tracksHTML}</div>`;
     });
 
     cardsHTML += `
